@@ -1,6 +1,7 @@
 // create express server
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors")
 const app = express();
 
 const exercicesRouter = require("./Routers/Exercice.router")
@@ -8,8 +9,9 @@ const studentsRouter = require("./Routers/Student.router")
 
 require("dotenv").config();
 app.use(express.json())
+app.use(cors())
 app.get("/", (req, res) => {
-  res.send("Server express connected on port 3000");
+  res.send(`Server Express Connected on ${process.env.PORT}`);
 });
 mongoose.connect(process.env.URL, {
   useNewUrlParser: true,

@@ -1,41 +1,45 @@
 import React from 'react';
-import Input from '../Components/Input';
-import { useState } from 'react'
+import { useEffect, useState } from 'react';
+import axios from 'axios'
+import '../App.css';
 function AddStudent() {
-    const [student, setStudent] = useState(0);
-    const [titre, setTitre] = useState(0);
-    const [description, setDescription] = useState(0);
-    const [duration, setDuration] = useState(0);
+    const [student, setStudent] = useState({ firstName: '', lastName: '', matricule: '', group: '', email: '' })
 
-    const getStudent = (e) => {
-        setStudent(parseInt(e.target.value))
-    }
-    const getTitre = (e) => {
-        setTitre(parseInt(e.target.value))
-    }
-    const getDescription = (e) => {
-        setDescription(parseInt(e.target.value))
-    }
-    const getDuration = (e) => {
-        setDuration(parseInt(e.target.value))
-    }
 
     const printValue = (e) => {
+
         e.preventDefault()
-        sendValue(inputVal)
-        calculate()
-        setInputVal(0)
+        console.log('====================================');
+        console.log(student);
+        console.log('====================================');
+
+        axios.post('http://localhost:4000/Students/create', student)
+            .then((res) => {
+                console.log("fff")
+            }).catch((error) => {
+                //  console.log(error)
+            });
+
+
+        setStudent({
+            firstName: '', lastName: '', matricule: '', group: '', email: ''
+        })
 
     }
-
     return <div>
-        {/* <form onSubmit={printValue} className='col' > */}
-            <Input label='Student' sendValue={getStudent} calculate={() => dispatch({ type: "recharge" })} />
-            <Input label='Titre' sendValue={getTitre} calculate={() => dispatch({ type: "recharge" })} />
-            <Input label='Description' sendValue={getDescription} calculate={() => dispatch({ type: "recharge" })} />
-            <Input label='Duration' sendValue={getDuration} calculate={() => dispatch({ type: "recharge" })} />
-            <button type='submit'>Recharger</button>
-        {/* </form> */}
+
+
+        <form onSubmit={printValue} className='form'>
+            <input placeholder='Matricule' value={student.matricule} type='text' onChange={(e) => { setStudent({ ...student, matricule: e.target.value }) }} />
+            <input placeholder='Firstname' value={student.firstName}  type='text' onChange={(e) => { setStudent({ ...student, firstName: e.target.value }) }} />
+            <input placeholder='Lastname' value={student.lastName}  type='text' onChange={(e) => { setStudent({ ...student, lastName: e.target.value }) }} />
+            <input placeholder='Email' value={student.email}  type='text' onChange={(e) => { setStudent({ ...student, email: e.target.value }) }} />
+            <input placeholder='Group' value={student.group}  type='text' onChange={(e) => { setStudent({ ...student, group: e.target.value }) }} />
+
+            <input type='submit'></input>
+        </form>
+
+
     </div>;
 }
 

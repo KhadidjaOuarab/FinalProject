@@ -13,14 +13,17 @@ const exerciceSchema = new Schema({
     dateExo: Date,
     duration: Number,
     level: String,
-    students: [
-        { 
-        matricule: Number, 
-        firstName: String,
-        lastName: String,
-        group: String 
-    }]
+    students: [{type: Schema.Types.ObjectId, ref: "Student"}],
 
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+
+    updated_at: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = mongoose.model("Exercice", exerciceSchema);

@@ -4,18 +4,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const studentSchema = new Schema({
-    matricule: Number,
+    matricule: String,
     firstName: String,
     lastName: String,
+    email: String,
     group: String,
-    exercices: [{   
-        guid: Number,
-        title: String,           
-        description: String,
-        dateExo: Date,
-        duration: Number,
-        level: String 
-    }]
+    exercices : [{type: Schema.Types.ObjectId, ref: "Exercice"}]
 
 });
 
